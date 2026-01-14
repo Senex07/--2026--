@@ -1,1 +1,5 @@
-streamlit==1.28.0
+streamlit==1.29.0
+fpdf2==2.7.7
+Pillow==10.1.0
+arabic-reshaper==3.0.0
+python-bidi==0.4.2
