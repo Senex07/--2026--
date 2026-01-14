@@ -159,12 +159,18 @@ def create_pdf(insights, is_premium):
     
     return pdf.output(dest='S').encode('latin1')
 
-# Inject custom CSS
+# Inject custom CSS with corrected colors
 def inject_custom_css():
     st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+        
+        /* FIXED: Main page background - light Moroccan cream */
+        .stApp {
+            background-color: #fdf6e3;
+            background-image: linear-gradient(to bottom, #fdf6e3, #fff9f0);
+        }
         
         * {
             font-family: 'Noto Naskh Arabic', 'Amiri', serif;
@@ -172,7 +178,7 @@ def inject_custom_css():
             direction: rtl;
         }
         
-        /* Moroccan color palette */
+        /* FIXED: Moroccan color palette with better contrast */
         :root {
             --moroccan-red: #C1272D;
             --moroccan-orange: #F7931E;
@@ -180,17 +186,19 @@ def inject_custom_css():
             --moroccan-green: #39B54A;
             --moroccan-blue: #006233;
             --moroccan-gold: #D4AF37;
-            --moroccan-dark: #8B4513;
-            --moroccan-light: #FFF8E1;
+            --moroccan-dark: #4B2E2E; /* FIXED: Deep brown for text */
+            --moroccan-light: #FFF8F0; /* FIXED: Light warm background */
+            --moroccan-cream: #FFF3E0; /* FIXED: Cream for cards */
+            --text-dark: #333333; /* FIXED: Dark gray for text */
         }
         
-        /* Main header */
+        /* FIXED: Main header with better contrast */
         .main-header {
             background: linear-gradient(135deg, var(--moroccan-red), var(--moroccan-orange), var(--moroccan-yellow));
             padding: 2.5rem;
             border-radius: 20px;
             text-align: center;
-            color: white;
+            color: white; /* Good contrast on red/orange */
             margin-bottom: 2rem;
             box-shadow: 0 10px 40px rgba(193, 39, 45, 0.2);
             position: relative;
@@ -205,15 +213,17 @@ def inject_custom_css():
             top: -50px;
             right: -50px;
             transform: rotate(15deg);
+            color: white;
         }
         
         .logo-area {
             font-size: 3.5rem;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            color: white;
         }
         
-        /* Input styling */
+        /* FIXED: Input styling with proper backgrounds */
         .stTextInput>div>div>input, .stDateInput>div>div>input {
             text-align: right;
             font-size: 18px;
@@ -221,19 +231,27 @@ def inject_custom_css():
             border: 2px solid var(--moroccan-orange);
             border-radius: 12px;
             transition: all 0.3s;
-            background: var(--moroccan-light);
+            background: white; /* FIXED: White background for better contrast */
+            color: var(--moroccan-dark);
         }
         
         .stTextInput>div>div>input:focus, .stDateInput>div>div>input:focus {
             border-color: var(--moroccan-red);
             box-shadow: 0 0 0 3px rgba(193, 39, 45, 0.3);
             background: white;
+            color: var(--moroccan-dark);
         }
         
-        /* Button styling */
+        /* FIXED: Placeholder text color */
+        .stTextInput>div>div>input::placeholder, .stDateInput>div>div>input::placeholder {
+            color: #666666;
+            opacity: 0.7;
+        }
+        
+        /* FIXED: Button styling with proper contrast */
         .stButton>button {
             background: linear-gradient(135deg, var(--moroccan-red), var(--moroccan-orange));
-            color: white;
+            color: white !important; /* FIXED: Ensure white text */
             font-size: 22px;
             font-weight: bold;
             border: none;
@@ -249,7 +267,8 @@ def inject_custom_css():
         .stButton>button:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(193, 39, 45, 0.4);
-            background: linear-gradient(135deg, var(--moroccan-orange), var(--moroccan-red));
+            background: linear-gradient(135deg, #D43C2D, #FFA726);
+            color: white !important;
         }
         
         .stButton>button::after {
@@ -257,18 +276,20 @@ def inject_custom_css():
             position: absolute;
             left: 30px;
             transition: transform 0.3s;
+            color: white;
         }
         
         .stButton>button:hover::after {
             transform: translateX(-5px);
         }
         
-        /* Cards styling */
+        /* FIXED: Cards styling with proper background and text contrast */
         .insight-card {
-            background: linear-gradient(145deg, #ffffff, #f8f8f8);
+            background: linear-gradient(145deg, var(--moroccan-cream), #FFE8CC);
             border-radius: 18px;
             padding: 25px;
             margin: 18px 0;
+            border: 1px solid rgba(193, 39, 45, 0.2); /* FIXED: Added border */
             border-right: 8px solid var(--moroccan-gold);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
             transition: all 0.4s;
@@ -292,7 +313,7 @@ def inject_custom_css():
         }
         
         .card-title {
-            color: var(--moroccan-red);
+            color: var(--moroccan-dark) !important; /* FIXED: Dark brown for titles */
             font-size: 26px;
             font-weight: 700;
             margin-bottom: 18px;
@@ -303,19 +324,19 @@ def inject_custom_css():
         }
         
         .card-content {
-            color: #2c3e50;
+            color: var(--text-dark) !important; /* FIXED: Dark gray for content */
             font-size: 19px;
             line-height: 1.9;
             padding-right: 15px;
-            background: linear-gradient(45deg, transparent, rgba(255, 222, 23, 0.05));
+            background: rgba(255, 255, 255, 0.3); /* FIXED: Light background for text */
             padding: 15px;
             border-radius: 10px;
         }
         
-        /* Badges */
+        /* FIXED: Badges with proper contrast */
         .free-badge {
             background: linear-gradient(135deg, var(--moroccan-green), #27ae60);
-            color: white;
+            color: white !important;
             padding: 8px 20px;
             border-radius: 25px;
             font-size: 15px;
@@ -323,11 +344,12 @@ def inject_custom_css():
             display: inline-block;
             margin-bottom: 15px;
             box-shadow: 0 4px 15px rgba(57, 181, 74, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         .premium-badge {
             background: linear-gradient(135deg, var(--moroccan-gold), var(--moroccan-orange));
-            color: white;
+            color: white !important;
             padding: 8px 20px;
             border-radius: 25px;
             font-size: 15px;
@@ -335,12 +357,13 @@ def inject_custom_css():
             display: inline-block;
             margin-bottom: 15px;
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
-        /* Premium section */
+        /* FIXED: Premium section with better contrast */
         .premium-section {
-            background: linear-gradient(135deg, #FFF8E1, #FFECB3);
-            border: 3px solid var(--moroccan-gold);
+            background: linear-gradient(135deg, var(--moroccan-cream), #FFE0B2);
+            border: 2px solid var(--moroccan-gold);
             padding: 25px;
             border-radius: 20px;
             margin: 25px 0;
@@ -352,24 +375,17 @@ def inject_custom_css():
             content: "💎";
             position: absolute;
             font-size: 200px;
-            opacity: 0.05;
+            opacity: 0.08; /* FIXED: Reduced opacity for better contrast */
             bottom: -50px;
             right: -50px;
+            color: var(--moroccan-dark);
         }
         
-        /* Action buttons */
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
+        /* FIXED: Action buttons with proper colors */
         .action-btn {
             background: linear-gradient(135deg, var(--moroccan-blue), #004d26);
-            color: white;
-            border: none;
+            color: white !important;
+            border: 1px solid rgba(0, 0, 0, 0.1);
             padding: 14px 28px;
             border-radius: 12px;
             cursor: pointer;
@@ -385,19 +401,21 @@ def inject_custom_css():
         }
         
         .action-btn:hover {
-            background: linear-gradient(135deg, var(--moroccan-green), #2ecc71);
+            background: linear-gradient(135deg, #00834A, #2ecc71);
             transform: scale(1.05);
             box-shadow: 0 8px 20px rgba(57, 181, 74, 0.3);
+            color: white !important;
         }
         
-        /* Fun highlights */
+        /* FIXED: Highlight text */
         .highlight-text {
-            background: linear-gradient(45deg, transparent 40%, rgba(255, 222, 23, 0.2) 40%, rgba(255, 222, 23, 0.2) 60%, transparent 60%);
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 222, 23, 0.3) 40%, rgba(255, 222, 23, 0.3) 60%, transparent 60%);
             padding: 2px 5px;
             border-radius: 4px;
+            color: var(--moroccan-dark);
         }
         
-        /* Disclaimer */
+        /* FIXED: Disclaimer box */
         .disclaimer-box {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             border-top: 4px solid var(--moroccan-red);
@@ -406,9 +424,52 @@ def inject_custom_css():
             margin-top: 40px;
             text-align: center;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            color: var(--moroccan-dark);
         }
         
-        /* Mobile responsiveness */
+        /* FIXED: Social icons */
+        .social-icon {
+            font-size: 24px;
+            background: linear-gradient(135deg, var(--moroccan-red), var(--moroccan-orange));
+            color: white !important;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(193, 39, 45, 0.3);
+        }
+        
+        /* FIXED: All headings and text colors */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--moroccan-dark) !important;
+        }
+        
+        p, span, div {
+            color: var(--text-dark) !important;
+        }
+        
+        /* FIXED: Streamlit specific elements */
+        .stMarkdown, .stAlert, .stSuccess, .stInfo, .stWarning, .stError {
+            color: var(--text-dark) !important;
+        }
+        
+        /* FIXED: Code blocks */
+        .stCode {
+            background-color: #f5f5f5 !important;
+            color: var(--moroccan-dark) !important;
+            border: 1px solid #ddd;
+        }
+        
+        /* FIXED: Mobile responsiveness */
         @media (max-width: 768px) {
             .main-header {
                 padding: 1.8rem;
@@ -447,9 +508,14 @@ def inject_custom_css():
             .action-buttons {
                 flex-direction: column;
             }
+            
+            /* FIXED: Ensure text is readable on mobile */
+            body {
+                font-size: 16px !important;
+            }
         }
         
-        /* Animations */
+        /* FIXED: Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -465,50 +531,23 @@ def inject_custom_css():
             animation: fadeInUp 0.6s ease-out;
         }
         
-        /* Theme toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: white;
-            padding: 10px;
-            border-radius: 50%;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            cursor: pointer;
+        /* FIXED: Section dividers */
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--moroccan-orange), transparent);
+            margin: 30px 0;
         }
         
-        /* Social sharing */
-        .social-share {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .social-icon {
-            font-size: 24px;
-            background: linear-gradient(135deg, var(--moroccan-red), var(--moroccan-orange));
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .social-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(193, 39, 45, 0.3);
+        /* FIXED: Ensure all text is visible */
+        * {
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
         }
     </style>
     """, unsafe_allow_html=True)
 
 def main():
-    # Inject custom CSS
+    # Inject custom CSS with corrected colors
     inject_custom_css()
     
     # Load templates
@@ -519,8 +558,8 @@ def main():
     <div class="main-header">
         <div class="logo-area">🌿✨</div>
         <h1 style="font-size: 3rem; margin: 10px 0; text-shadow: 2px 2px 8px rgba(0,0,0,0.3);">الرسائل الشخصية المغربية 2026</h1>
-        <p style="font-size: 1.4rem; opacity: 0.95; margin-bottom: 10px;">رسائل شخصية تولد خصيصاً لك بالدارجة المغربية</p>
-        <p style="font-size: 1rem; opacity: 0.8; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; display: inline-block;">
+        <p style="font-size: 1.4rem; opacity: 0.95; margin-bottom: 10px; color: white !important;">رسائل شخصية تولد خصيصاً لك بالدارجة المغربية</p>
+        <p style="font-size: 1rem; opacity: 0.9; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; display: inline-block; color: white !important;">
             ⚠️ للترفيه فقط • تولد خوارزمياً • لا تعتمد على أي مبادئ علمية
         </p>
     </div>
@@ -603,7 +642,7 @@ def main():
             
             # Display insights
             st.markdown("---")
-            st.markdown(f'<h2 style="text-align: center; color: #C1272D; margin-bottom: 30px;">🌿 رسائل خاصة لـ {insights["name"]}</h2>', unsafe_allow_html=True)
+            st.markdown(f'<h2 style="text-align: center; color: #4B2E2E; margin-bottom: 30px;">🌿 رسائل خاصة لـ {insights["name"]}</h2>', unsafe_allow_html=True)
             
             # Free sections
             col1, col2 = st.columns(2)
@@ -627,7 +666,7 @@ def main():
             # Premium sections
             if is_premium:
                 st.markdown('<div class="premium-section">', unsafe_allow_html=True)
-                st.markdown('<h2 style="color: #D4AF37; text-align: center; margin-bottom: 25px;">💎 الإضافات الكاملة</h2>', unsafe_allow_html=True)
+                st.markdown('<h2 style="color: #4B2E2E; text-align: center; margin-bottom: 25px;">💎 الإضافات الكاملة</h2>', unsafe_allow_html=True)
                 
                 # First row
                 col1, col2 = st.columns(2)
@@ -693,9 +732,9 @@ def main():
                         st.markdown('<span class="premium-badge">💎 كامل</span>', unsafe_allow_html=True)
                         st.markdown('<div class="card-title">✨ لمسات إضافية</div>', unsafe_allow_html=True)
                         st.markdown(f'<div class="card-content">')
-                        st.markdown(f'<p><strong>🔢 الرقم السعيد:</strong> {insights.get("lucky_number", "")}</p>')
-                        st.markdown(f'<p><strong>📅 اليوم السعيد:</strong> {insights.get("lucky_day", "")}</p>')
-                        st.markdown(f'<p><strong>💬 جملة تحفيزية:</strong> {insights.get("motivational_phrase", "")}</p>')
+                        st.markdown(f'<p><strong style="color: #4B2E2E;">🔢 الرقم السعيد:</strong> {insights.get("lucky_number", "")}</p>')
+                        st.markdown(f'<p><strong style="color: #4B2E2E;">📅 اليوم السعيد:</strong> {insights.get("lucky_day", "")}</p>')
+                        st.markdown(f'<p><strong style="color: #4B2E2E;">💬 جملة تحفيزية:</strong> {insights.get("motivational_phrase", "")}</p>')
                         st.markdown('</div>')
                         st.markdown('</div>', unsafe_allow_html=True)
                 
@@ -703,7 +742,7 @@ def main():
             
             # Action buttons
             st.markdown("---")
-            st.markdown('<h3 style="text-align: center; color: #006233;">📤 مشاركة وحفظ الرسائل</h3>', unsafe_allow_html=True)
+            st.markdown('<h3 style="text-align: center; color: #4B2E2E;">📤 مشاركة وحفظ الرسائل</h3>', unsafe_allow_html=True)
             
             col1, col2, col3 = st.columns(3)
             
@@ -734,7 +773,7 @@ def main():
    • جملة تحفيزية: {insights.get('motivational_phrase', '')}"""
                 
                 if st.button("📋 نسخ النص", use_container_width=True):
-                    st.code(all_text)
+                    st.code(all_text, language="text")
                     st.success("✅ تم نسخ النص بنجاح! يمكنك لصقه في أي مكان.")
             
             with col2:
@@ -756,7 +795,7 @@ def main():
                     share_text = f"جربت تطبيق الرسائل الشخصية المغربية 2026 وحصلت على رسائل شخصية رائعة!"
                     st.markdown(f"""
                     <div style="text-align: center; padding: 10px;">
-                        <p>شارك عبر:</p>
+                        <p style="color: #4B2E2E;">شارك عبر:</p>
                         <div class="social-share">
                             <div class="social-icon" onclick="navigator.share({{title: 'رسائلي الشخصية', text: '{share_text}', url: window.location.href}})">📱</div>
                             <div class="social-icon" onclick="window.open('https://wa.me/?text=' + encodeURIComponent('{share_text} ' + window.location.href))">💬</div>
@@ -772,19 +811,19 @@ def main():
     st.markdown("---")
     st.markdown("""
     <div class="disclaimer-box">
-        <h4>📜 ملاحظات قانونية وأخلاقية</h4>
+        <h4 style="color: #4B2E2E !important;">📜 ملاحظات قانونية وأخلاقية</h4>
         <p><strong>⚠️ هاد المحتوى للترفيه فقط:</strong> كل الرسائل تولد خوارزمياً باستخدام Python ولا تعتمد على أي مبادئ علمية، تنبؤية، فلكية، أو روحية.</p>
         <p><strong>🔒 خصوصيتك محمية:</strong> لا يتم حفظ أو تخزين أو مشاركة أي من معلوماتك الشخصية. كل العمليات تجري محلياً على جهازك.</p>
         <p><strong>🎯 الغرض من التطبيق:</strong> تقديم رسائل إيجابية وتحفيزية باللهجة المغربية للترفيه والتشجيع فقط.</p>
         <p><strong>🚫 لا للاعتماد:</strong> لا تعتمد على هذه الرسائل لأخذ قرارات مهمة في حياتك، العمل، الصحة، أو العلاقات.</p>
-        <p style="font-size: 0.9em; margin-top: 15px; opacity: 0.7;">© 2024 الرسائل الشخصية المغربية - تطوير تقني للترفيه الإيجابي</p>
+        <p style="font-size: 0.9em; margin-top: 15px; opacity: 0.7; color: #4B2E2E !important;">© 2024 الرسائل الشخصية المغربية - تطوير تقني للترفيه الإيجابي</p>
     </div>
     """, unsafe_allow_html=True)
     
     # Footer
     st.markdown("---")
     st.markdown("""
-    <div style="text-align: center; color: #666; padding: 25px;">
+    <div style="text-align: center; color: #4B2E2E; padding: 25px;">
         <p style="font-size: 1.1em;">🌿 تم التطوير بكل ❤️ لخدمة الثقافة واللغة المغربية</p>
         <p style="font-size: 0.9em; opacity: 0.8;">استمتع برسائل إيجابية وترفيهية بالدارجة المغربية المحببة</p>
         <p style="margin-top: 20px; font-size: 0.8em; opacity: 0.6;">الإصدار 3.0 | يدعم جميع الأجهزة | تصميم مغربي أصيل</p>
