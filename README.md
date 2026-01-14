@@ -1,30 +1,35 @@
-MOROCCAN PERSONAL PREDICTIONS GENERATOR 2026
-==========================================
+PERSONALIZED MOROCCAN INSIGHTS 2026
+====================================
 
 DESCRIPTION
 -----------
-A Python-based web application that generates personalized predictions for Moroccan users for the year 2026.
-The application uses deterministic algorithms to create unique, culturally relevant predictions based on user inputs,
-delivered entirely in Moroccan Darija (Arabic script).
+A Python-based Streamlit web application that generates **personalized insights and messages** for Moroccan users in 2026. 
+The app delivers culturally relevant, fun, and motivational readings in **Moroccan Darija (Arabic script)**.
 
-This project is designed for entertainment purposes only.
+This app is designed for **entertainment purposes only**, using legal-safe terminology like "reading" or "insight" rather than fortune-telling or astrology.
 
+---
 
 FEATURES
 --------
-- Interactive Streamlit web interface with Moroccan-inspired design
-- Personalized predictions based on:
-  - Full name
-  - Birth date
-  - City
-- Deterministic output (same inputs = same results every time)
-- No database required
-- No external APIs required
-- All generated content in Moroccan Darija (Arabic script)
-- Over 1.28 billion possible prediction combinations
-- Built-in disclaimer for entertainment-only content
-- Runs fully offline
+- Interactive Streamlit web interface with **Moroccan-inspired design**:
+  - Warm colors (red, orange, yellow, soft green)
+  - Decorative fonts
+  - Cards for each insight category
+  - Mobile-first responsive design
+- Free and Premium experiences:
+  - Free: personality description + one general insight
+  - Premium: full message with:
+    - Golden advice
+    - Challenge/Warning
+    - Lucky number and lucky day
+    - Fun surprises: mini quiz, joke, or motivational phrase
+- Copy-to-clipboard and optional PDF download
+- Deterministic output (same input → same result)
+- Over 1.5 billion possible insight combinations
+- Legal-safe disclaimer: "هاد المحتوى للترفيه فقط"
 
+---
 
 INSTALLATION
 ------------
@@ -32,149 +37,121 @@ Prerequisites:
 - Python 3.7 or higher
 - pip package manager
 
-Setup Steps:
-
-1. Create project directory:
-   mkdir moroccan-predictions
-   cd moroccan-predictions
-
+Setup:
+1. Clone or download the repository
 2. Create required files:
    - app.py
    - templates.json
    - requirements.txt
-
 3. Install dependencies:
    pip install -r requirements.txt
-
-4. Run the application:
+4. Run application:
    streamlit run app.py
-
-5. Open your browser and navigate to:
+5. Open browser (or phone) at:
    http://localhost:8501
 
+---
 
 FILE STRUCTURE
 --------------
-moroccan-predictions/
-├── app.py              # Main Streamlit application
-├── templates.json      # JSON file containing all prediction text templates
-└── requirements.txt    # Python dependencies
+moroccan-insights/
+├── app.py            # Main Streamlit application
+├── templates.json    # JSON with all text templates and insights
+└── requirements.txt  # Python dependencies
 
+---
 
 USAGE
 -----
-1. Enter your full name (Arabic preferred)
-2. Select your birth date (YYYY-MM-DD)
+1. Enter your full name (in Arabic)
+2. Enter your birth date (YYYY-MM-DD)
 3. Enter your city
 4. Click the button: "عطيني الرسالة ديالي"
-5. View your personalized predictions instantly
+5. View your Free insights immediately
+6. Unlock Premium for the full experience
 
-
-PREDICTION CATEGORIES
----------------------
-- Personality reading
-- 2026 life prediction
-- Personal strength
-- Warning message
+Prediction / Insight Categories:
+- Personality description
+- Yearly life insight
+- Personal strengths
+- Warning or challenge
 - Golden advice
-- Lucky number
-- Lucky day
+- Lucky number and lucky day
+- Fun surprises (quiz, joke, motivational phrase)
+- Suggested activity or mood insight
 
+---
 
 TECHNICAL DETAILS
 -----------------
 Algorithm:
-- Concatenate user inputs: name + birth_date + city
-- Generate SHA-256 hash
-- Convert hash into a fixed random seed
-- Use seed to initialize Python's random module
-- Deterministically select text blocks from templates.json
+- Concatenate inputs: Name + Birthdate + City
+- SHA-256 hashing → seed Python random module
+- Deterministic selection of text blocks from templates.json
 
-Architecture:
-- Backend: Pure Python
-- Frontend: Streamlit (single-page application)
-- Data Storage: JSON files only (no database)
-- Randomness: Python random module with fixed seeding
+Code Architecture:
+- Backend: Python
+- Frontend: Streamlit
+- Data: JSON file storage only (no database)
+- Free / Premium logic implemented in app.py
+- PDF download and copy-to-clipboard functionality
 
+Key Functions:
+- generate_seed(): deterministic seed from user inputs
+- load_templates(): load insights from JSON
+- generate_insights(): create personalized insight set
+- display_results(): show Free and Premium sections
 
-KEY FUNCTIONS
--------------
-- generate_seed():
-  Creates a deterministic seed from user inputs
-
-- load_templates():
-  Loads prediction templates from JSON file
-
-- generate_predictions():
-  Generates the complete personalized prediction set
-
-
-CUSTOMIZATION
--------------
-Modifying Predictions:
+Customization:
 - Edit templates.json to:
-  - Change existing texts
-  - Add new variations (minimum 20 per category recommended)
-  - Adapt cultural references
+  - Add new insights
+  - Modify cultural references
+  - Update motivational or fun surprises
+- Change UI colors, fonts, layout in app.py
 
-Styling Changes:
-- Edit the CSS section in app.py to:
-  - Change colors
-  - Modify fonts
-  - Adjust spacing and layout
-
+---
 
 DISCLAIMER
 ----------
-This application generates content solely for entertainment purposes.
-The predictions are not based on scientific, psychological, or astrological principles
-and should not be used for making important life decisions.
+This application is purely for entertainment purposes.
+Predictions and insights are **not based on astrology or fortune-telling** and should not guide important life decisions.
 
+---
 
 SECURITY NOTES
 --------------
-- No user data is stored
-- No data is transmitted
+- No user data is stored or transmitted
 - All processing happens locally
 - No internet connection required
-- No personal data persistence
+- Free / Premium logic handled internally
 
+---
 
 PERFORMANCE
 -----------
-- Minimal memory usage
+- Minimal memory footprint
 - Fast local execution
-- No heavy dependencies
-- Suitable for low-resource machines
+- Responsive design for mobile devices
+- Suitable for low-resource environments
 
+---
 
 TROUBLESHOOTING
 ---------------
-Common Issues:
-- App won't start:
-  Ensure Python and Streamlit are correctly installed
+- App won’t start: verify Python and Streamlit installation
+- Missing templates.json: ensure it’s in the same directory as app.py
+- Encoding issues: files must be UTF-8 encoded
+- Display issues: clear browser cache or try another browser
+- Testing: same inputs → same outputs, different inputs → different outputs, all categories populated
 
-- Missing templates:
-  Make sure templates.json is in the same directory as app.py
-
-- Encoding problems:
-  Ensure all files are saved in UTF-8 encoding
-
-- Display issues:
-  Clear browser cache or try a different browser
-
-Testing Checklist:
-- Same inputs always produce the same outputs
-- Different inputs produce different outputs
-- All prediction categories are generated correctly
-
+---
 
 LICENSE
 -------
-Open-source project for educational and entertainment purposes.
+Open-source project for **educational and entertainment purposes**.
 
+---
 
 SUPPORT
 -------
-For issues or questions related to the code implementation,
-please refer to the project documentation or source code comments.
+For questions related to the code or customization, refer to the documentation in app.py or templates.json.
